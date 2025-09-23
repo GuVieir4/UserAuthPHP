@@ -16,4 +16,12 @@ class User {
     public function verifyPassword(string $password): bool {
         return password_verify($password, $this->passwordHash);
     }
+
+    public static function validateEmail(string $email): string {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) !== false) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
