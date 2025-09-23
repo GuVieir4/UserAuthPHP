@@ -3,15 +3,29 @@
 require_once "User.php";
 
 class UserManager {
+    private array $users = [];
+
+    public function addUser(User $user): string {
+        $this->users[$user->id] = $user;
+        return "Usuário adicionado ao sistema!";
+    }
     
-    public function updateName(User $user, string $newName): string {
-        $user->name = $newName;
-        return "Nome do usuário atualizado para $user->name!";
+    public function updateEmail(User $user, string $newEmail): string {
+        if (isset($this->users[$user->id])) {
+            $this->users[$user->id]->email = $newEmail;
+            return "Email do usuário atualizado para $newEmail!";
+        }
+
+        return "Usuário não encontrado";
     }
 
-    public function updateEmail(User $user, string $newEmail): string {
-        $user->email = $newEmail;
-        return "Email do usuário atualizado para $user->email!";
+    public function updateName(User $user, string $newName): string {
+        if (isset($this->users[$user->id])) {
+            $this->users[$user->id]->name = $newName;
+            return "Nome do usuário atualizado para $newName;!";
+        }
+
+        return "Usuário não encontrado";
     }
 
     public function login(User $user, string $password): string {
