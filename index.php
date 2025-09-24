@@ -1,29 +1,18 @@
 <?php
 
-require_once "User.php";
-require_once "UserManager.php";
+require_once "src/User.php";
+require_once "src/UserManager.php";
 
 $userManager = new UserManager();
 
-$user1 = $userManager->makeRegister(1, "Daniel", "daniel@@unimar.br", "unimar");
-$user2 = $userManager->makeRegister(2, "Gustavo", "gustavo@unimar.br", "unimar");
+echo "<h3>Criando usuário com e-mail válido e senha forte</h3>";
+$gustavo = $userManager->makeRegister(2, "Gustavo Henrique", "1992080@unimar.br", "Senha321");
 
-echo "<h3>Atualizando nome e email:</h3>";
-echo $userManager->updateName($user2, "Gustavo Henrique");
+echo "<h3>Dados do usuário:</h3>";
+echo "<p>Usuário: $gustavo->name </p>";
+echo "<p>Email: $gustavo->email </p>";
+echo "<p>Senha: $gustavo->passwordHash </p>";
 echo "<br>";
-echo $userManager->updateEmail($user2, "1992080@unimar.br");
-
-echo "<h3>Dados do Usuário:</h3>";
-echo "<p>Usuário: $user2->name</p>";
-echo "<p>Email: $user2->email</p>";
-echo "<p>Senha: $user2->passwordHash</p>";
-
-echo "<h3>Tentando login com senha correta</h3>";
-echo $userManager->makeLogin($user2, "unimar");
-
-echo "<h3>Tentando login com senha incorreta</h3>";
-echo $userManager->makeLogin($user2, "fiap");
-
 echo "<h3> Casos de Uso Obrigatórios</h3>";
 echo "<h3> Caso 1 - Cadastro válido</h3>";
 $maria = $userManager->makeRegister(3, "Maria Oliveira", "maria@email.com", "Senha123");
@@ -33,3 +22,12 @@ $pedro = $userManager->makeRegister(4, "Pedro", "pedro@@email.com", "Senha123");
 
 echo "<h3> Caso 3 - Tentativa de login com senha errada</h3>";
 echo $userManager->makeLogin($maria, "unimar");
+
+echo "<h3> Caso 4 - Reset de senha válido</h3>";
+echo $userManager->resetPassword($maria, "NovaSenha1");
+
+echo "<h3> Caso 5 - Cadastro de usuário com e-mail duplicado</h3>";
+$mario = $userManager->makeRegister(5, "Mario", "maria@email.com", "Senha123");
+
+echo "<br>";
+echo "<p>* Só estou mostrando a senha para mostrar que está com hash, sei que em um projeto não se deve fazer isso.</p>";

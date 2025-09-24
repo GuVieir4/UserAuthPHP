@@ -24,4 +24,21 @@ class User {
             return false;
         }
     }
+
+    public static function validatePassword(string $password): string {
+        if (mb_strlen($password) < 8) {
+            return false;
+        }
+
+        if (!preg_match('/[A-Z]/', $password)) {
+            return false;
+        }
+
+        if (!preg_match('/\d/', $password)) {
+            return false;
+        }
+
+        return true;
+
+    }
 }
